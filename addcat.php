@@ -1,8 +1,8 @@
 <?php
 	$dbhost = "localhost:3306";
-    $dbuser = "admin1";
-	$dbpass = "ramesh";
-	$conn = mysqli_connect($dbhost, $dbuser, $dbpass, "actecomm1");
+    // $dbuser = "admin1";
+	// $dbpass = "ramesh";
+	$conn = mysqli_connect($dbhost, "admin1", "ramesh", "actecomm1");
    
 	if(!$conn ) {
       die('Could not connect: ');
