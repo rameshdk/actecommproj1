@@ -43,7 +43,7 @@
 		{
 		$content="<img src='$modimagepath'><div><p>$proddescr1</p></div>";
 		$actionpart="addtocart.php?pid=".$_POST['pid'];
-		$content.="<form method='GET' action='$actionpart'  >Quantity<input type='text' name='quantity' ><input><input type='submit'  name='addtocart' value='add to cart'></input></form>";
+		$content.="<form method='GET' action='$actionpart'  >Quantity<input type='text' name='quantity' ></input><input type='submit'  name='addtocart' value='add to cart'></input></form>";
 		$fpurl=fopen($fullurl,'w');
 		fwrite($fpurl,$content);
 		fclose($fpurl);
