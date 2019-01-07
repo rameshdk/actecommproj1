@@ -1,0 +1,31 @@
+<html>
+<head>
+<title>Admin tasks</title>
+<script>
+	<!--function not used-->
+	function AddProduct()
+	{
+			alert("Entered AddProduct");
+      var xmlhttp = new XMLHttpRequest();
+      xmlhttp.open("GET", "AddProduct.php");
+      xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+      xmlhttp.send();
+      xmlhttp.onreadystatechange = function() {
+        if (this.readyState === 4 && this.status === 200) {
+			alert("ajax succeeded");
+			alert(this.responseText);
+          document.innerHTML = this.responseText;
+        } else {
+          document.innerHTML = "Loading...";
+        };
+      }
+	
+	}
+</script>
+</head>
+<body>
+	Add Product Page<input onclick="window.location='addproductpage.html';" type="submit" value="addproductpage"></input></br>
+	Add Product<input onclick="window.location='addnewproduct.html';" type="submit" value="addproduct"></input></br>
+	Add Category<input type="submit" OnClick="window.location='addnewcat.html'" value="Add category">
+</body>
+</html>

@@ -16,6 +16,8 @@
 	$proddescr1=$_POST['proddescr'];
 	$imgpath=$_POST['imgpath'];
 	$produrl=$_POST['produrl'];
+	
+	
 	$emptyurl=false;
 	$fullurl=NULL;
 	if($produrl==NULL)
@@ -30,13 +32,18 @@
 		$ext="html";
 		$fullurl=$fname.".".$ext;
 		}
+	else
+		$fullurl=$produrl;
+	
 	$sql="INSERT INTO PRODUCTS(pid,pname,catid,IMGPATH,pdescr,URLDETAILS) VALUES ('$pid','$pname','$catid','$imagepath','$proddescr1','$fullurl')";
 	
 	$retval = mysqli_query($conn, $sql);
 	$modimagepath="../".$imagepath;
-	if($emptyurl)
+//	if($emptyurl)
 		{
 		$content="<img src='$modimagepath'><div><p>$proddescr1</p></div>";
+		$actionpart="addtocart.php?pid=".$_POST['pid'];
+		$content.="<form method='GET' action='$actionpart'  >Quantity<input type='text' name='quantity' ><input><input type='submit'  name='addtocart' value='add to cart'></input></form>";
 		$fpurl=fopen($fullurl,'w');
 		fwrite($fpurl,$content);
 		fclose($fpurl);

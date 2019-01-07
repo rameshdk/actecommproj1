@@ -16,8 +16,8 @@
 	
 	$catid=$_GET['catid'];
 	$count=1;
-	$nocolumns=2;
-	$colwidth=floor(12/$nocolumns);
+	$nocolumns=6;
+	$colwidth=ceil(12/$nocolumns)-2;
 	$output=NULL;
 	$sql="SELECT * FROM products WHERE catid=".$catid;
 	
@@ -41,13 +41,13 @@
 		//echo "<div class='container1'><img src='$row[5]'><div class='overlay'> <a href='$row[6]'>$row[1]</a></div></div>" ;
 		//echo "<img src='$row[5]'><div class='overlay'> <a href='$row[6]'>$row[1]</a></div>" ;
 		$output=$output."<div class='col-sm-"."$colwidth'>";
-		$output=$output."<img src='$row[5]' class='img-thumbnail'><a href='$row[6]'>$row[1]</a>" ;
+		$output=$output."<img src='$row[5]' class='img-responsive' width=100 height=100><a href='$row[6]'>$row[1]</a>" ;
 		$output=$output."</div>";
 		if($count ==1)
 			{
 			}
 		$count ++;
-		if($count ==$nocolumns)
+		if($count ==($nocolumns+1))
 			{
 			$output=$output."</div>";
 			$count =1;
