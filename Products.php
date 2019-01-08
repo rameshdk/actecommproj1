@@ -19,11 +19,32 @@
 	$nocolumns=6;
 	$colwidth=ceil(12/$nocolumns)-2;
 	$output=NULL;
-	$sql="SELECT * FROM products WHERE catid=".$catid;
+	$sql="SELECT * FROM products WHERE catid=".$catid ;
+	$sql2="SELECT * FROM categories where catid=".$catid." AND hassubcat='false'";
+	$retval2=mysqli_query($conn, $sql2);
 	
 	$retval = mysqli_query($conn, $sql);
-	if(!$retval) {
-	   die("Failed to fetch record");
+	//die("row count=".mysqli_num_rows($retval2));
+	if(mysqli_num_rows($retval2)==0) {
+		$rowcount=0;
+		mysqli_free_result($retval);
+		mysqli_free_result($retval2);
+		
+		$sql3="SELECT CHILDCATNAME, CHILDCATID FROM catmap where PARENTCATID=".$catid;
+		$retval3 = mysqli_query($conn, $sql3);
+		//die("row count=".mysqli_num_rows($retval3));
+		$output=NULL;
+		$output="<div>";
+		while($row=mysqli_fetch_array($retval3, MYSQLI_NUM)) {
+			$output.="<a href='#' name=$row[0] onclick='showproducts($row[1])'>$row[0]</a></br>";
+			
+			$rowcount++;
+		}
+		$output.="</div>";
+		//die("row count =".$rowcount);
+	   //die("Failed to fetch record");
+	   //die($output);
+	   mysqli_free_result($retval3);
 	} else {
 	   // if records are there
 	   $output=$output."<div class='container'>";
@@ -55,9 +76,11 @@
 		}
 		$output=$output."</div>";
 		//echo $productslst;
+		mysqli_free_result($retval);
+
 	}
 	
-   mysqli_free_result($retval);
+//   mysqli_free_result($retval);
    mysqli_close($conn);
 //	$output="<!--".$output;
 //	$output=$output."-->";

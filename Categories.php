@@ -13,7 +13,7 @@
 		// echo 'Connected successfully<br/>';
 	}
 	
-	$sql="SELECT * FROM categories";
+	$sql="SELECT * FROM categories WHERE hasparentcat='false'";
 	$retval = mysqli_query($conn, $sql);
 	if(!$retval) {
 	   die("Failed to fetch record");

@@ -80,7 +80,7 @@
 			<ul class="dropdown-menu">
 			<?php 
 				$conn = mysqli_connect("localhost:3306", "admin1", "ramesh", "actecomm1");
-				$sql="SELECT * FROM categories";
+				$sql="SELECT * FROM categories WHERE hasparentcat='false'";
 				$retval = mysqli_query($conn, $sql);
 					if(!$retval) {
 					   die("Failed to fetch record");
