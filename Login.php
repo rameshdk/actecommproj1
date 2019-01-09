@@ -17,7 +17,7 @@
    $uname=$_POST['uname'];
    $pass=$_POST['pass'];
    
-   $sql="SELECT * FROM users WHERE username='".$uname."' AND pass='".$pass."'";
+   $sql="SELECT ROLE FROM users WHERE username='".$uname."' AND pass='".$pass."'";
    
    $retval = mysqli_query($conn, $sql);
    if(!$retval) {
@@ -26,10 +26,13 @@
 		echo "Login Successful";
 		// store the user in session object
 		$_SESSION['user'] = $uname;
-	
+		$row=mysqli_fetch_array($retval,MYSQLI_NUM);
 		// connect to CategoryController
 		// header("Location:./CategoryController.php");
-		header("Location:./Categories.php");
+		if($row[0]=="normal")
+			header("Location:./index.php");
+		else
+			header("Location:./admin.html");
    }
    mysqli_free_result($retval);
    mysqli_close($conn);
