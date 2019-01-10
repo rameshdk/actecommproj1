@@ -9,9 +9,17 @@
 	<link href="css/bootstrap.min.css" rel="stylesheet">
 	<link href="css/imgoverlay.css" rel="stylesheet">
 	<link href="css/flexgrid1.css" rel="stylesheet">
+	
 	<script>
 		function showproducts(catid){
 			//alert("Entered showproducts");
+			if(!(catid==0))
+			{
+				document.cookie = "catid" + "=" + catid + ";"
+			}
+			else
+				return;
+			
       var display = document.getElementById("divcontent");
       var xmlhttp = new XMLHttpRequest();
       xmlhttp.open("GET", "Products.php?catid="+catid);
@@ -27,6 +35,28 @@
         };
       }
     }
+		function showproducts2(){
+			alert("Entered showproducts2");
+		document.cookie = "catid" + "=" + catid + ";"
+
+		var display = document.getElementById("divcontent");
+      var xmlhttp = new XMLHttpRequest();
+	  var searchterm= document.getElementById("SearchTerm").value;
+	  alert(searchterm);
+      xmlhttp.open("GET", "Productslist.php?SearchTerm="+searchterm);
+      xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+      xmlhttp.send();
+      xmlhttp.onreadystatechange = function() {
+        if (this.readyState === 4 && this.status === 200) {
+			//alert("ajax succeeded");
+			//alert(this.responseText);
+          display.innerHTML = this.responseText;
+        } else {
+          display.innerHTML = "Loading...";
+        };
+      }
+    }
+
 		function genprodpg(pid){
 			//alert("Entered showproducts");
       var display = document.getElementById("divcontent");
@@ -44,11 +74,60 @@
         };
       }
     }
-	
+	function getCookie(cname) {
+  var name = cname + "=";
+  var decodedCookie = decodeURIComponent(document.cookie);
+  var ca = decodedCookie.split(';');
+  for(var i = 0; i <ca.length; i++) {
+    var c = ca[i];
+    while (c.charAt(0) == ' ') {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) == 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+  return "";
+}
+
+function deleteAllCookies() {
+    var cookies = document.cookie.split(";");
+
+    for (var i = 0; i < cookies.length; i++) {
+        var cookie = cookies[i];
+        var eqPos = cookie.indexOf("=");
+        var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+        document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+    }
+}
+function refreshpage()
+{
+			//alert("Entered showproducts");
+			var catid=getCookie("catid");
+		alert("in refreshpage");
+      var display = document.getElementById("divcontent");
+      var xmlhttp = new XMLHttpRequest();
+      xmlhttp.open("GET", "Products.php?catid="+catid);
+      xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+      xmlhttp.send();
+      xmlhttp.onreadystatechange = function() {
+        if (this.readyState === 4 && this.status === 200) {
+			//alert("ajax succeeded");
+			//alert(this.responseText);
+          display.innerHTML = this.responseText;
+        } else {
+          display.innerHTML = "Loading...";
+        };
+      }
+ 
+}
+
+
+
 	</script>
 </head>
 
-<body>
+<body onload="refreshpage()">
 	<!-- jQuery (necessary for Bootstrap’s JavaScript plugins) -->
 	<script src="js/jquery.js"></script>
 	<!-- Include all compiled plugins (below), or include individual files as needed -->
@@ -107,11 +186,12 @@
 			</ul> -->
 	</li>
 	</ul>
-	<form class="navbar-form navbar-left" role="search">
+	<form  class="navbar-form navbar-left" role="search">
 	<div class="form-group">
-	<input type="text" class="form-control" placeholder="Search">
+	<input type="text" class="form-control" id="SearchTerm" placeholder="Search">
 	</div>
-	<button type="submit" class="btn btn-default">Submit</button>
+	<button type="button" onclick="showproducts2()" >Submit</button>
+	<!--<button type="button" onclick="showproducts2()" class="btn btn-default">Submit</button>-->
 	</form>
 	<ul class="nav navbar-nav navbar-right">
 	<li><a href="#">Link</a></li>
