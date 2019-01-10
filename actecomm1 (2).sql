@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 09, 2019 at 03:13 PM
+-- Generation Time: Jan 10, 2019 at 01:07 PM
 -- Server version: 10.1.37-MariaDB
 -- PHP Version: 7.2.12
 
@@ -104,9 +104,9 @@ INSERT INTO `products` (`pid`, `pname`, `price`, `pdescr`, `catid`, `IMGPATH`, `
 (9, 'Fogg1', NULL, 'Fogg1', 1, 'images/FOGG1.png', '#'),
 (10, 'Euphoria1', NULL, 'Euphoria1', 1, 'images/Euphoria1.jpg', '#'),
 (11, 'Eternity1', NULL, 'Eternity1', 1, 'images/Eternity1.jpg', '#'),
-(12, 'Wildstone1', NULL, 'Wildstone1', 1, 'images/wildstone1.png', '#'),
-(13, NULL, NULL, 'perfume', 1, 'images/FOGG1.png', NULL),
-(14, NULL, NULL, 'wild stone 2\r\nprice:10$;\r\nxyz', 1, 'images/WILDSTONE2.png', NULL),
+(12, 'Wildstone1', NULL, 'Wildstone1', 1, 'images/wildstone1.png', 'produrls/wildstone1.html'),
+(13, 'fogg2', NULL, 'perfume', 1, 'images/FOGG1.png', 'produrls/fogg2.html'),
+(14, 'wildstone1', NULL, 'wild stone 2\r\nprice:10$;\r\nxyz', 1, 'images/WILDSTONE2.png', 'produrls/wildstone2.html'),
 (16, 'sonyled1', NULL, 'Resolution: HD Ready (1366x768p) | Refresh Rate: 5', 7, 'images/sonyled2.jpg', '#'),
 (17, 'samsungled1', NULL, 'Resolution: HD Ready (1366x768p)\r\n Display: Story ', 7, 'images/samsungtel1.jpg', '#'),
 (18, 'sonyled2', NULL, 'sony led 2', 7, 'images/sonyled2.jpg', 'produrls/sonyled2.html'),
