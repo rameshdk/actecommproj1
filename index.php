@@ -12,14 +12,26 @@
 	
 	<script>
 		function showproducts(catid){
-			//alert("Entered showproducts");
+			alert("Entered showproducts");
+			
 			if(!(catid==0))
 			{
 				document.cookie = "catid" + "=" + catid + ";"
 			}
 			else
-				return;
+			{
+			catid=0;	
+//				return;
+			}
+			alert("searched="+getCookie("searched"));
 			
+		if(getCookie("searched")==1&&catid==0)
+			{
+				showproducts2();
+	//			document.cookie = "searched" + "=" + "0" + ";"
+				return;
+			}
+		
       var display = document.getElementById("divcontent");
       var xmlhttp = new XMLHttpRequest();
       xmlhttp.open("GET", "Products.php?catid="+catid);
@@ -34,15 +46,17 @@
           display.innerHTML = "Loading...";
         };
       }
+	  setCookie("searched",0,1);
     }
 		function showproducts2(){
 			alert("Entered showproducts2");
-		document.cookie = "catid" + "=" + catid + ";"
-
+		//document.cookie = " searched" + "=" + "1" + ";"
+		setCookie("searched",1,1);
+		setCookie("catid",0,1);
 		var display = document.getElementById("divcontent");
       var xmlhttp = new XMLHttpRequest();
 	  var searchterm= document.getElementById("SearchTerm").value;
-	  alert(searchterm);
+	  alert("search termis:"+searchterm);
       xmlhttp.open("GET", "Productslist.php?SearchTerm="+searchterm);
       xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
       xmlhttp.send();
@@ -74,6 +88,12 @@
         };
       }
     }
+	function setCookie(cname, cvalue, exdays) {
+  var d = new Date();
+  d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+  var expires = "expires="+d.toUTCString();
+  document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+	}
 	function getCookie(cname) {
   var name = cname + "=";
   var decodedCookie = decodeURIComponent(document.cookie);
@@ -90,6 +110,8 @@
   return "";
 }
 
+function deleteCookie(name) { setCookie(name, '', -1); }
+
 function deleteAllCookies() {
     var cookies = document.cookie.split(";");
 
@@ -102,10 +124,25 @@ function deleteAllCookies() {
 }
 function refreshpage()
 {
-			//alert("Entered showproducts");
-			var catid=getCookie("catid");
 		alert("in refreshpage");
-      var display = document.getElementById("divcontent");
+//    if (!(document.cookie.indexOf("searched=") >= 0&&document.cookie.indexOf("catid=")>=0))
+//		return;
+	//alert("both cookies not set");
+	//alert("searched="+getCookie("searched"));
+	//alert("catid="+getCookie("catid"));
+	//alert("Entered showproducts");
+			if(getCookie("searched")==1)
+			{
+				showproducts2()
+//				document.cookie = "searched" + "=" + "0" + ";"
+				return;
+			}
+	  
+			var catid=getCookie("catid");
+			var searchterm=getCookie("searched");
+	  if(catid==0&&searchterm==0)
+		  return;
+	  var display = document.getElementById("divcontent");
       var xmlhttp = new XMLHttpRequest();
       xmlhttp.open("GET", "Products.php?catid="+catid);
       xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
@@ -122,12 +159,17 @@ function refreshpage()
  
 }
 
-
+function removecookies()
+{
+	alert("removing cookeis");
+	deleteCookie("catid");
+	deleteCookie("searched");
+}
 
 	</script>
 </head>
 
-<body onload="refreshpage()">
+<body onload="refreshpage()" onunload="javascript:alert('unloading');">
 	<!-- jQuery (necessary for Bootstrap’s JavaScript plugins) -->
 	<script src="js/jquery.js"></script>
 	<!-- Include all compiled plugins (below), or include individual files as needed -->
@@ -135,22 +177,28 @@ function refreshpage()
 
 	<!--	nav bar starts here -->
 	<nav class="navbar navbar-default">
-	<div class="container-fluid">
+	<div class="container">
 	<!-- Brand and toggle get grouped for better mobile display -->
+	
 	<div class="navbar-header">
-	<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-  -
+	
+	<!--<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-  -
 	target="#bs-example-navbar-collapse-1" aria-expanded="false">
 	<span class="sr-only">Toggle navigation</span>
 	<span class="icon-bar"></span>
 	<span class="icon-bar"></span>
 	<span class="icon-bar"></span>
-	</button>
+	</button>-->  
 	<a class="navbar-brand" href="#">EComm</a>
 	</div>
+	
+	
 	<!-- Collect the nav links, forms, and other content for toggling -->
+	
 	<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 	<ul class="nav navbar-nav">
 	<li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
+	
 	<li><a href="#">Link</a></li>
 	<li class="dropdown">
 		<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-  -
@@ -195,8 +243,9 @@ function refreshpage()
 	</form>
 	<ul class="nav navbar-nav navbar-right">
 	<li><a href="#">Link</a></li>
+	
 	<li class="dropdown">
-	<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-  -
+		<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-  -
 	haspopup="true" aria-expanded="false">User <span class="caret"></span></a>
 	<ul class="dropdown-menu">
 	<li><a href="index.html">Login</a></li>
@@ -207,12 +256,13 @@ function refreshpage()
 	</ul>
 	</li>
 	</ul>
+
 	</div ><!-- /.navbar-collapse -->
 	</div ><!-- /.container-fluid -->
 	</nav>
 	<!--    nav bar ends here   -->
 	
-	<div class="container-fluid">
+	<div class="container">
 		<div class="row">
 		 <div class="col-md-3 menu">
 			<h4>Categories</h4>
@@ -220,8 +270,8 @@ function refreshpage()
 				require "./Categories.php";
 			?>
 		 </div>
-		 <div id="divcontent" class="col-md-6 login">
-		 
+		 <div  class="col-md-6 login">
+			<div class="row" id="divcontent">	
 		    <!--<form method="post" action="./Login.php">
 			<fieldset>
 			 <legend>Login Form</legend>
@@ -242,20 +292,139 @@ function refreshpage()
              <p align="right"><a href="NewUser.html">New User</a></p>
 			</fieldset>
 			</form> -->
+			</div><!--end of div row-->
 		 </div>
 		 <div class="col-md-3 ads">
 			<h4>ads comes here</h4>
 		 </div>
 		</div>
 	</div>
-
+	
+	<div id="footer">
+	<table>
+		<th>About us &nbsp&nbsp&nbsp   </th>
+		<th>Help   </th>
+		<tr>
+			<td></td>
+			<td><a>Your account</a></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td><a>Your orders</a></td>
+		</tr>
+	</table>
+</br><p>&copy Activenet Informatics </p>
+</div>
 </body>
 <head>
  <style>
+ #footer {
+	 float:clear both;
+ }
   .menu, .login, .ads {	
-	# background-color:yellow;
+	//background-color:yellow;
 	border: solid 1px red;
-  } 
+  }
+  .nav{
+	  background-color:pink;  
+  }
+  .menu
+  {
+	background-color:lightgreen;  
+  }
+  #divcontent
+  {
+	background-color:yellow;  
+  }
+  .ads{
+	  background-color:lightgreen;
+  }
+  .image1div {
+	 position:relative;
+	// padding:5px 0px 5px 0px;
+  }
+  .image1div:hover  span ,.image1div a span:hover{
+  	  position:absolute;
+	  color:darkviolet;
+	  font-weight:bold;
+	  font-size:20px;	
+	  top:40%;
+	  transition:opacity 2s;
+	  transition:font-size 0s;
+	  opacity:1.0;
+  }
+  .image1div span
+  {
+	  position:relative;
+	  top:40%;
+	  font-size:15px;
+	  opacity:0.9;
+  }
+  .image1div{
+	  
+  }
+  .image1div:hover
+  {
+	  transition:opacity .8s;
+  }
+  
+  .imagetext(
+    z-index:2;
+  }
+  .imageclass1
+  {
+//	  width:50px;
+  }
+  
+ 
+  .col-sm-1-5,.col-sm-3-5, .col-sm-8-5 {
+    position: relative;
+    min-height: 1px;
+    padding-right: 15px;
+    padding-left: 15px;
+}
+
+@media (min-width: 768px) {
+    .col-sm-1-5,.col-sm-3-5, .col-sm-8-5 {
+        float: left;
+    }
+	.col-sm-1-5 {
+		width:10%;
+	}
+    .col-sm-3-5 {
+        width: 29.16666667%;
+    }
+    .col-sm-8-5 {
+        width: 70.83333333%;
+    }
+}
+
+  .col-md-1-5,.col-md-3-5, .col-md-8-5 {
+    position: relative;
+    min-height: 1px;
+    padding-right: 15px;
+    padding-left: 15px;
+}
+
+@media (min-width: 961px) {
+    .col-md-1-5,.col-md-3-5, .col-md-8-5 {
+        float: left;
+    }
+	.col-md-1-5{
+		width:12.5%;
+	}
+    .col-md-3-5 {
+        width: 29.16666667%;
+    }
+    .col-md-8-5 {
+        width: 70.83333333%;
+    }
+}
+
+/*
+.col-sm-1-5{
+	.make-sm-column(2.0);
+}*/
  </style>
 </head>
 </html>

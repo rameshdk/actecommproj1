@@ -17,12 +17,20 @@
 	//$catid=$_POST['catid'];
 	$count=1;
 	$nocolumns=8;
-	$colwidth=floor(12/$nocolumns);
+	$flcolwidth=12/$nocolumns;
+	$colwidth=floor($flcolwidth);
 	if($colwidth<0)
 	{
 //		die("column width is 1");
 		$colwidth=1;
 	}
+	$colsuffix=NULL;
+	if($flcolwidth>1.2&&$flcolwidth<1.65)
+		$colsuffix="col-sm-1-5 col-sm-1";
+	else
+		$colsuffix="col-sm-$colwidth";
+	
+	//die($colsuffix);
 	$output=NULL;
 	$searchterm=$_GET['SearchTerm'];
 	//die($searchterm);
@@ -69,10 +77,9 @@
 		   die("Failed to fetch rows");
 	}
 	
-	//die("row count=".mysqli_num_rows($retval2));
-	//die("no rows found:".mysqli_num_rows($retval));
 	// if records are there
 	   $output=$output."<div class='container'>";
+	   
 	   while($row=mysqli_fetch_array($retval, MYSQLI_NUM)) {
 		//$productslst.=$row[0]." ".$row[1]." ".$row[2]." ".$row[3]." ".$row[4]."<br/>";
 		//echo $productslst;
@@ -87,16 +94,19 @@
 		//echo "<div class='container1'><img src='$row[5]'><div class='overlay'> <a href='$row[6]'>$row[1]</a></div></div>" ;
 		//echo "<img src='$row[5]'><div class='overlay'> <a href='$row[6]'>$row[1]</a></div>" ;
 		
-		$output=$output."<div width=floor(700/$nocolumns) class='col-sm-"."$colwidth' >";
-		//$output=$output."<div width=floor(450/$nocolumns) >";
+		//$output=$output."<div width=floor(700/$nocolumns) class='col-sm-"."$colwidth' >";
+		$test=(string)"".$colsuffix."";
+		//die($test);
+		$output=$output."<div  class='".$colsuffix."' >";
 		
+		//die((string)$colsuffix);
 		
 		
 		//$output=$output."<a href='$row[6]'><img src='$row[5]' class='image1 img-responsive' width=100 height=100><a href='$row[6]'><p //class='imagetext'> $row[1]</p></a></a>" ;
 		//die("colwidth:".$colwidth);
 		$imgwidth=floor(450/$nocolumns);
 		//die("image width is $imgwidth");
-		$output=$output."<div class='image1div'><a href='$row[6]'><img src='$row[5]' class='image1  imageclass$colwidth' width=$imgwidth ></br><span class='imagetext'> $row[1]</span></a></div>" ;
+		$output=$output."<div class='image1div'><a href='$row[6]'><img src='$row[5]' class='image1 img-responsive imageclass$colwidth' width=$imgwidth ></br><span class='imagetext'> $row[1]</span></a></div>" ;
 		
 		//die("style='width:$imgwidth px;height:$imgwidth px;");
 		
@@ -112,6 +122,7 @@
 			}
 		}
 	//	die("row count is ".$count);
+//on line 81 div is closed here	
 		$output=$output."</div>";
 		//echo $productslst;
 		mysqli_free_result($retval);

@@ -20,7 +20,9 @@
 	
 	$count=1;
 	$nocolumns=6;
-	$colwidth=ceil(12/$nocolumns)-2;
+	$colwidth=floor(12/$nocolumns);
+	if($colwidth<=0)
+		$colwidth=1;
 	$output=NULL;
 	$sql="SELECT * FROM products WHERE catid=".$catid ;
 	$sql2="SELECT * FROM categories where catid=".$catid." AND hassubcat='false'";
@@ -65,7 +67,12 @@
 		//echo "<div class='container1'><img src='$row[5]'><div class='overlay'> <a href='$row[6]'>$row[1]</a></div></div>" ;
 		//echo "<img src='$row[5]'><div class='overlay'> <a href='$row[6]'>$row[1]</a></div>" ;
 		$output=$output."<div class='col-sm-"."$colwidth'>";
-		$output=$output."<img src='$row[5]' class='img-responsive' width=100 height=100><a href='$row[6]'>$row[1]</a>" ;
+		
+		//below line chnaged to add image overlay effect
+		//$output=$output."<img src='$row[5]' class='img-responsive' width=100 height=100><a href='$row[6]'>$row[1]</a>" ;
+		
+		$output=$output."<div class='image1div'><a href='$row[6]'><img src='$row[5]' class='image1 img-responsive' width=100 height=100><span class='imagetext'> $row[1]</span></a></div>" ;
+	
 		$output=$output."</div>";
 		if($count ==1)
 			{
