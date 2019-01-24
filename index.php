@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -9,10 +10,139 @@
 	<link href="css/bootstrap.min.css" rel="stylesheet">
 	<link href="css/imgoverlay.css" rel="stylesheet">
 	<link href="css/flexgrid1.css" rel="stylesheet">
+
+<style>
+:root{
+	--noofcolumns:6;
+	--imgtextsize:20px;
+}
+ #footer {
+	 float:clear both;
+ }
+  .menu, .login, .ads {	
+	//background-color:yellow;
+	border: solid 1px red;
+  }
+  .nav{
+	  background-color:lightgray;  
+  }
+  .menu
+  {
+	background-color:orange;  
+  }
+  #divcontent
+  {
+	background-color:yellow;  
+  }
+  .ads{
+	  background-color:orange;
+  }
+  .image1div {
+	 position:relative;
+	// padding:5px 0px 5px 0px;
+  }
+  .image1div:hover  span ,.image1div a span:hover{
+  	  position:absolute;
+	  color:darkviolet;
+	  font-weight:bold;
+	  font-size:calc(30/var(--nocolumns))px;	
+	  top:75%;
+	  transition:opacity 2s;
+	  transition:font-size 0s;
+	  opacity:1.0;
+  }
+  .image1div span
+  {
+	  //position:relative;
+	 position: absolute;
+	  top:75%;
+//	  font-size:calc(30/var(--nocolumns))px;
+	  opacity:0.9;
+  }
+  .image1div{
+	  
+  }
+  .image1div:hover
+  {
+	  transition:opacity .8s;
+  }
+  /*
+  .imagetext(
+	font-size:20;
+    z-index:2;
+  }
+  */
+  .imageclass1
+  {
+//	  width:50px;
+  }
+  
+ 
+  .col-sm-1-5,.col-sm-3-5, .col-sm-8-5 {
+    position: relative;
+    min-height: 1px;
+    padding-right: 15px;
+    padding-left: 15px;
+}
+
+@media (min-width: 768px) {
+    .col-sm-1-5,.col-sm-3-5, .col-sm-8-5 {
+        float: left;
+    }
+	.col-sm-1-5 {
+		width:12.5%;
+	}
+	body .imageclass8
+	{
+		width:50px;
+		--imgtextsize:8px;
+	}
+    .col-sm-3-5 {
+        width: 29.16666667%;
+    }
+    .col-sm-8-5 {
+        width: 70.83333333%;
+    }
+}
+
+  .col-md-1-5,.col-md-3-5, .col-md-8-5 {
+    position: relative;
+    min-height: 1px;
+    padding-right: 15px;
+    padding-left: 15px;
+}
+
+@media (min-width: 961px) {
+    .col-md-1-5,.col-md-3-5, .col-md-8-5 {
+        float: left;
+    }
+	.col-md-1-5{
+		width:12.5%;
+	}
+    .col-md-3-5 {
+        width: 29.16666667%;
+    }
+    .col-md-8-5 {
+        width: 70.83333333%;
+    }
+}
+
+/*
+.col-sm-1-5{
+	.make-sm-column(2.0);
+}*/
+</style>
+
+	
 	
 	<script>
+	var nocolumns=8;
+	var firsttime=true;
 		function showproducts(catid){
-			alert("Entered showproducts");
+			//alert("Entered showproducts");
+			
+			//root.documentElement.style.setProperty('--noofcolumns', nocolumns);
+			//alert("after");
 			
 			if(!(catid==0))
 			{
@@ -27,6 +157,7 @@
 			
 		if(getCookie("searched")==1&&catid==0)
 			{
+				alert("diverting to show products2");
 				showproducts2();
 	//			document.cookie = "searched" + "=" + "0" + ";"
 				return;
@@ -34,22 +165,51 @@
 		
       var display = document.getElementById("divcontent");
       var xmlhttp = new XMLHttpRequest();
-      xmlhttp.open("GET", "Products.php?catid="+catid);
+	  //alert("calling products.php");
+      xmlhttp.open("GET", "Products.php?catid="+catid+"&nocolumns="+nocolumns);
+	  //alert("Products.php?catid="+catid+"&nocolumns="+nocolumns);
+	  
       xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
       xmlhttp.send();
       xmlhttp.onreadystatechange = function() {
         if (this.readyState === 4 && this.status === 200) {
 			//alert("ajax succeeded");
 			//alert(this.responseText);
-          display.innerHTML = this.responseText;
+			display.innerHTML = this.responseText;
+		  	var fontsz=Math.floor(100/nocolumns);
+			var strfsz=fontsz+"px";
+
+			alert(strfsz);
+        	var res=document.getElementsByClassName("imagetext");
+			for(var i=0;i<res.length;i++)
+			{
+				res[i].style.setProperty('font-size',strfsz);
+			}
+					var cols=document.getElementsByClassName("col-sm-1-5");
+		for(var i=0;i<cols.length;i++)
+		{
+//			cols[i].style.setProperty(width,"12.5%");
+		}
+		setcolwidths();
         } else {
           display.innerHTML = "Loading...";
         };
       }
 	  setCookie("searched",0,1);
+	  var fontsz=Math.floor(30/nocolumns);
+	  var strfsz=fontsz+" px";
+	  
+	/*  if (this.readyState === 4 && this.status === 200)
+	  {
+		  alert(strfz);
+		getElementsByClass("imagetext").style.fontSize=strfsz;
+	  
+	  }*/
+	  
+	  
     }
 		function showproducts2(){
-			alert("Entered showproducts2");
+		//	alert("Entered showproducts2");
 		//document.cookie = " searched" + "=" + "1" + ";"
 		setCookie("searched",1,1);
 		setCookie("catid",0,1);
@@ -57,18 +217,41 @@
       var xmlhttp = new XMLHttpRequest();
 	  var searchterm= document.getElementById("SearchTerm").value;
 	  alert("search termis:"+searchterm);
-      xmlhttp.open("GET", "Productslist.php?SearchTerm="+searchterm);
+      xmlhttp.open("GET", "Productslist.php?SearchTerm="+searchterm+"&nocolumns="+nocolumns);
       xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
       xmlhttp.send();
       xmlhttp.onreadystatechange = function() {
         if (this.readyState === 4 && this.status === 200) {
 			//alert("ajax succeeded");
 			//alert(this.responseText);
-          display.innerHTML = this.responseText;
-        } else {
+			display.innerHTML = this.responseText;
+		  	var fontsz=Math.floor(100/nocolumns);
+			var strfsz=fontsz+"px";
+
+			//dbg vars over
+			//alert(strfsz);
+        	var res=document.getElementsByClassName("imagetext");
+			for(var i=0;i<res.length;i++)
+			{
+				res[i].style.setProperty('font-size',strfsz);
+			}
+					var cols=document.getElementsByClassName("col-sm-1-5");
+		for(var i=0;i<cols.length;i++)
+		{
+			cols[i].style.setProperty(width,"12.5%");
+		}
+		setcolwidths();
+		} else {
           display.innerHTML = "Loading...";
         };
       }
+	/*  
+	if (this.readyState === 4 && this.status === 200)
+	{
+		alert("s2 fontssize:"+strfsz);
+	getElementsByClass("imagetext").style.fontSize=strfsz;
+	}
+	*/
     }
 
 		function genprodpg(pid){
@@ -125,7 +308,26 @@ function deleteAllCookies() {
 function refreshpage()
 {
 		alert("in refreshpage");
-//    if (!(document.cookie.indexOf("searched=") >= 0&&document.cookie.indexOf("catid=")>=0))
+		if(firsttime)
+		{
+//		alert("adding event listener");
+//		window.addEventListener('load',setcolwidths,false);
+		firsttime=false;
+		}
+		nocolumns=4;
+		var cols=document.getElementsByClassName("col-sm-1-5");
+	for(var i=0;i<cols.length;i++)
+		{
+			cols[i].style.setProperty(width,"12.5%");
+		}
+	//if(firsttime==false)
+		{
+//			setcolwidths();
+		}
+	//	else
+	//		firsttime=false;
+	
+//    2if (!(document.cookie.indexOf("searched=") >= 0&&document.cookie.indexOf("catid=")>=0))
 //		return;
 	//alert("both cookies not set");
 	//alert("searched="+getCookie("searched"));
@@ -144,7 +346,7 @@ function refreshpage()
 		  return;
 	  var display = document.getElementById("divcontent");
       var xmlhttp = new XMLHttpRequest();
-      xmlhttp.open("GET", "Products.php?catid="+catid);
+      xmlhttp.open("GET", "Products.php?catid="+catid+"&nocolumns="+nocolumns);
       xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
       xmlhttp.send();
       xmlhttp.onreadystatechange = function() {
@@ -152,6 +354,18 @@ function refreshpage()
 			//alert("ajax succeeded");
 			//alert(this.responseText);
           display.innerHTML = this.responseText;
+		  	var fontsz=Math.floor(100/nocolumns);
+			var strfsz=fontsz+"px";
+
+			//dbg vars over
+			//alert(strfsz);
+        	var res=document.getElementsByClassName("imagetext");
+			for(var i=0;i<res.length;i++)
+			{
+				res[i].style.setProperty('font-size',strfsz);
+			}
+			setcolwidths();
+	
         } else {
           display.innerHTML = "Loading...";
         };
@@ -166,10 +380,39 @@ function removecookies()
 	deleteCookie("searched");
 }
 
+function setcolwidths()
+{
+	var listelems;
+	var classnames;
+	var widthelem=0;
+	var percentval=0;
+	
+	alert("setting col widths");
+	for(var j=1;j<13;j++)
+	{
+		listelems=document.getElementsByClassName("col-sm-"+j);
+	//alert("col-sm-"+j);
+	for(var i=0;i<listelems.length;i++)
+	
+	{
+		classnames=listelems[i].classList;
+		prclassname=classnames.item(1);	
+		
+		percentval=Number(prclassname[0]+"."+prclassname[1])*7.9;
+		
+		widthelem=percentval+"%";
+		
+	//	alert(widthelem);
+		
+		
+		listelems[i].style.setProperty("width",widthelem);
+	}
+	}
+}
 	</script>
 </head>
 
-<body onload="refreshpage()" onunload="javascript:alert('unloading');">
+<body class="mystyle" onload="refreshpage()" onunload="javascript:alert('unloading');">
 	<!-- jQuery (necessary for Bootstrap’s JavaScript plugins) -->
 	<script src="js/jquery.js"></script>
 	<!-- Include all compiled plugins (below), or include individual files as needed -->
@@ -262,7 +505,7 @@ function removecookies()
 	</nav>
 	<!--    nav bar ends here   -->
 	
-	<div class="container">
+	<div class="container-fluid">
 		<div class="row">
 		 <div class="col-md-3 menu">
 			<h4>Categories</h4>
@@ -295,7 +538,7 @@ function removecookies()
 			</div><!--end of div row-->
 		 </div>
 		 <div class="col-md-3 ads">
-			<h4>ads comes here</h4>
+			<h4>ads come here</h4>
 		 </div>
 		</div>
 	</div>
@@ -316,115 +559,4 @@ function removecookies()
 </br><p>&copy Activenet Informatics </p>
 </div>
 </body>
-<head>
- <style>
- #footer {
-	 float:clear both;
- }
-  .menu, .login, .ads {	
-	//background-color:yellow;
-	border: solid 1px red;
-  }
-  .nav{
-	  background-color:pink;  
-  }
-  .menu
-  {
-	background-color:lightgreen;  
-  }
-  #divcontent
-  {
-	background-color:yellow;  
-  }
-  .ads{
-	  background-color:lightgreen;
-  }
-  .image1div {
-	 position:relative;
-	// padding:5px 0px 5px 0px;
-  }
-  .image1div:hover  span ,.image1div a span:hover{
-  	  position:absolute;
-	  color:darkviolet;
-	  font-weight:bold;
-	  font-size:20px;	
-	  top:40%;
-	  transition:opacity 2s;
-	  transition:font-size 0s;
-	  opacity:1.0;
-  }
-  .image1div span
-  {
-	  position:relative;
-	  top:40%;
-	  font-size:15px;
-	  opacity:0.9;
-  }
-  .image1div{
-	  
-  }
-  .image1div:hover
-  {
-	  transition:opacity .8s;
-  }
-  
-  .imagetext(
-    z-index:2;
-  }
-  .imageclass1
-  {
-//	  width:50px;
-  }
-  
- 
-  .col-sm-1-5,.col-sm-3-5, .col-sm-8-5 {
-    position: relative;
-    min-height: 1px;
-    padding-right: 15px;
-    padding-left: 15px;
-}
-
-@media (min-width: 768px) {
-    .col-sm-1-5,.col-sm-3-5, .col-sm-8-5 {
-        float: left;
-    }
-	.col-sm-1-5 {
-		width:10%;
-	}
-    .col-sm-3-5 {
-        width: 29.16666667%;
-    }
-    .col-sm-8-5 {
-        width: 70.83333333%;
-    }
-}
-
-  .col-md-1-5,.col-md-3-5, .col-md-8-5 {
-    position: relative;
-    min-height: 1px;
-    padding-right: 15px;
-    padding-left: 15px;
-}
-
-@media (min-width: 961px) {
-    .col-md-1-5,.col-md-3-5, .col-md-8-5 {
-        float: left;
-    }
-	.col-md-1-5{
-		width:12.5%;
-	}
-    .col-md-3-5 {
-        width: 29.16666667%;
-    }
-    .col-md-8-5 {
-        width: 70.83333333%;
-    }
-}
-
-/*
-.col-sm-1-5{
-	.make-sm-column(2.0);
-}*/
- </style>
-</head>
 </html>
