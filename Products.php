@@ -61,9 +61,9 @@
 		$retval3 = mysqli_query($conn, $sql3);
 		//die("row count=".mysqli_num_rows($retval3));
 		$output=NULL;
-		$output="<div>";
+		$output="<div style='min-width:200px;min-height:200px;'>";
 		while($row=mysqli_fetch_array($retval3, MYSQLI_NUM)) {
-			$output.="<a href='#' name=$row[0] onclick='showproducts($row[1])'>$row[0]</a></br>";
+			$output.="<a href='#' name=$row[0]  onclick='showproducts($row[1])'>$row[0]</a></br>";
 			
 			$rowcount++;
 		}
@@ -92,12 +92,12 @@
 		//$output=$output."<div class='col-sm-"."$colwidth'>";
 		//$output=$output."<div class='$colclasses'>";
 		
-		$output=$output."<div  class='".$colclasses." ".$colact1."' >";
+		$output=$output."<div  class='".$colclasses." ".$colact1."' style='min-width:200;min-height:200' >";
 		
 		//below line chnaged to add image overlay effect
 		//$output=$output."<img src='$row[5]' class='img-responsive' width=100 height=100><a href='$row[6]'>$row[1]</a>" ;
 		
-		$output=$output."<div class='image1div'><a href='$row[6]'><img src='$row[5]' class='image1 img-responsive' width=100 height=100><span class='imagetext'> $row[1]</span></a></div>" ;
+		$output=$output."<div class='image1div'><a href='$row[6]'><img src='$row[5]' class='image1 img-responsive' ><span class='imagetext'> $row[1]</span></a></div>" ;
 	
 		$output=$output."</div>";
 		if($count ==1)

@@ -35,7 +35,7 @@
 	//die("widthdec is :".(ceil(($flcolwidth-$widthint)*10)));
 	$colact1=$widthint."".$widthdec;
 	
-	if($flcolwidth>1.2&&$flcolwidth<1.65)
+/*	if($flcolwidth>1.2&&$flcolwidth<1.65)
 	{
 		$colname="col-sm-1";
 		$colid="icol-sm-1-5";
@@ -43,8 +43,9 @@
 	}
 	else
 	{
+	*/
 		$colname="col-sm-$colwidth";
-	}
+/*	}*/
 	//die("at 1:".$colact1);
 	//die($colsuffix);
 	$output=NULL;
@@ -106,21 +107,14 @@
 			$output=$output."<div class='row'>";
 		}
 			
-		//echo "<img src='$row[5]'> <a href='$row[6]'>$row[1]</a></img>" ;
-		//echo "<div class='container1'><img src='$row[5]'><div class='overlay'> <a href='$row[6]'>$row[1]</a></div></div>" ;
-		//echo "<div class='container1'><img src='$row[5]'><div class='overlay'> <a href='$row[6]'>$row[1]</a></div></div>" ;
-		//echo "<img src='$row[5]'><div class='overlay'> <a href='$row[6]'>$row[1]</a></div>" ;
 		
-		//$output=$output."<div width=floor(700/$nocolumns) class='col-sm-"."$colwidth' >";
 		$test=(string)"".$colname."";
 		//die($test);
 		
-		//$output=$output."<div  class='".$colsuffix."' >";
-		//$output=$output."<div  class='".$colsuffix." ".$colact."' >";
+		//$output=$output."<div class='thumbnail'>";
+		
 		$output=$output."<div  class='".$colname." ".$colact1."' >";
 		//die("at 2:".$colact1);
-		//$output=$output."<div  class='".$colsuffix."' id='".$colid.$divind."' >";
-		//die((string)$colsuffix);
 		
 		
 		$imgwidth=floor(450/$nocolumns);
@@ -132,7 +126,8 @@
 		
 		//die("style='width:$imgwidth px;height:$imgwidth px;");
 		
-		$output=$output."</div>";
+		$output=$output."</div>";//col end here
+		//$output=$output."</div>";//thubnail ends here
 		if($count ==1)
 			{
 			}
